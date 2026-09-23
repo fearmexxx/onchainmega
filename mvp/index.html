@@ -6,11 +6,12 @@
   <meta name="theme-color" content="#080a12">
   <title>Onchain Mega — Verifiable Number Draw</title>
   <link rel="stylesheet" href="./styles.css">
+  <script src="https://unpkg.com/@solana/web3.js@1.98.4/lib/index.iife.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="nav shell">
     <a class="brand" href="#" aria-label="Onchain Mega home"><span class="brand-mark">M</span><span>ONCHAIN MEGA</span></a>
-    <div class="nav-actions"><span class="network"><i></i> Devnet prototype</span><button class="wallet" type="button">Connect wallet</button></div>
+    <div class="nav-actions"><span class="network"><i></i> Solana devnet</span><button id="walletButton" class="wallet" type="button">Connect wallet</button></div>
   </header>
 
   <main>
@@ -39,7 +40,10 @@
         <div class="receipt-row"><span>Demo credits</span><strong>$1.00</strong></div>
         <div class="receipt-row"><span>Prize allocation</span><strong>60¢</strong></div>
         <div class="divider"></div>
-        <div class="notice"><span>i</span><p>This build uses play credits on devnet. It does not accept or award money.</p></div>
+        <div id="walletState" class="wallet-state" hidden>
+          <span>Connected wallet</span><strong id="walletAddress">—</strong><small id="walletBalance">Loading devnet balance…</small>
+        </div>
+        <div class="notice"><span>i</span><p>This build uses play credits on devnet. Network fees require devnet SOL, but it does not accept or award money.</p></div>
         <button id="review" class="primary" type="button" disabled>Review demo entry</button>
         <small>Odds of matching 6: 1 in 8,145,060</small>
       </aside>
@@ -52,7 +56,8 @@
     </section>
   </main>
 
-  <dialog id="dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">DEMO ENTRY READY</span><h2>Your numbers</h2><div id="dialogNumbers" class="dialog-numbers"></div><p>This is a non-monetary prototype. Wallet signing and devnet program submission are the next implementation milestone.</p><button class="primary">Close preview</button></form></dialog>
+  <dialog id="walletDialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">SOLANA DEVNET</span><h2>Choose a wallet</h2><div id="walletOptions" class="wallet-options"></div><p id="walletHelp">Install Phantom, Backpack, or another compatible injected Solana wallet to continue.</p></form></dialog>
+  <dialog id="dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">DEMO ENTRY READY</span><h2>Your numbers</h2><div id="dialogNumbers" class="dialog-numbers"></div><p>Submitting records a non-monetary memo receipt on Solana devnet. Your wallet pays only the devnet transaction fee.</p><div id="txStatus" class="tx-status" aria-live="polite"></div><button id="submitDevnet" class="primary" type="button">Submit to devnet</button><a id="txLink" class="explorer-link" target="_blank" rel="noreferrer" hidden>View on Solana Explorer ↗</a></form></dialog>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
