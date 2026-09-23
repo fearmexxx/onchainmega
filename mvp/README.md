@@ -1,6 +1,6 @@
 # Onchain Mega MVP
 
-This is a non-monetary, local/devnet product prototype. It demonstrates the number picker and the financial state machine without accepting funds, connecting a wallet, requesting randomness, or paying prizes.
+This is a non-monetary Solana devnet product prototype. It demonstrates the number picker, wallet connection, devnet memo receipts, and the financial state machine without accepting funds, requesting production randomness, or paying prizes.
 
 ## Run
 
@@ -9,6 +9,15 @@ node mvp/server.mjs
 ```
 
 Open `http://127.0.0.1:4173`.
+
+The server uses Solana's public devnet RPC by default. To use Helius without exposing its key to the browser:
+
+```powershell
+$env:HELIUS_API_KEY="your-key"
+node mvp/server.mjs
+```
+
+Connect Phantom or Backpack, ensure the address has devnet SOL, choose six numbers, and submit the demo entry. The resulting memo transaction links to Solana Explorer with `cluster=devnet`.
 
 ## Test
 
@@ -27,8 +36,8 @@ node --test mvp/domain.test.mjs
 
 ## Not yet implemented
 
-- Solana devnet program and PDA vaults;
-- Wallet Standard integration;
+- custom Solana devnet program and PDA vaults;
+- full Wallet Standard discovery beyond the Phantom and Backpack injected providers;
 - USDC transfers (intentionally disabled pending licensing);
 - multi-source verifiable randomness;
 - ticket accumulator and winner settlement;
