@@ -9,7 +9,7 @@
 
 Build a jurisdiction-gated, non-custodial lottery platform on Solana, beginning with one daily 6-from-45 game priced at **1 USDC per line**. The product should feel as simple as a mainstream mobile lottery while making ticket issuance, draw inputs, results, liabilities, and payouts independently auditable.
 
-The recommended business constraint is a **10% gross protocol take**, not a guaranteed 10% net-profit margin. The other 90% is accounted for as player prize liability. Net profit is the remainder of the 10% take after compliance, acquisition, infrastructure, support, oracle, audit, and payment costs. A true 10% net margin on ticket sales is incompatible with a 90% prize return unless other revenue pays every operating cost.
+The revised business model allocates **60% of ticket sales to player prizes** and 40% to gross operator revenue before gaming duties, compliance, acquisition, infrastructure, support, oracle, audit, payment costs, and reserve replenishment. The target is a 10% net operating margin; it is not guaranteed and must be validated market by market.
 
 Do not launch as literally “global.” Lottery and remote-gambling permission is market-specific. The launch must begin with a licensed entity, approved countries/regions, age and identity verification, sanctions screening, geofencing, responsible-gambling controls, and segregated player/prize funds. The European Commission notes that EU countries maintain different gambling regimes, and the UK regulator separately requires a remote lottery licence for qualifying remote lotteries ([European Commission](https://single-market-economy.ec.europa.eu/sectors/online-gambling_en), [UK Gambling Commission](https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/page/remote-lotteries)).
 
@@ -90,39 +90,38 @@ The UI must display the actual odds and payout method before purchase. It must n
 
 ### 5.3 Recommended prize accounting
 
-For every 1.00 USDC line:
+For every 1.00 USDC line in the MVP:
 
 | Allocation | Amount | Treatment |
 |---|---:|---|
-| Jackpot bucket | 0.50 | Pari-mutuel; rolls to the next eligible draw if no jackpot winner |
-| Match-5 bucket | 0.10 | Shared by valid winners; no-winner treatment specified in rules |
-| Match-4 bucket | 0.10 | Shared by valid winners; no-winner treatment specified in rules |
-| Match-3 bucket | 0.20 | Shared by valid winners; no-winner treatment specified in rules |
-| Protocol take | 0.10 | Operator gross gaming revenue before expenses and taxes |
+| Player prize pool | 0.60 | Accrues to the advertised jackpot in the initial MVP, capped at $1 million |
+| Gross operator allocation | 0.40 | Revenue before costs, duties, taxes, and reserve funding |
 
-This yields a contractual **90% prize allocation / 10% take**. To avoid unattractive or erratic lower-tier prizes, v1 should use published pari-mutuel buckets with a minimum payout backed by a ring-fenced reserve. The reserve must never be represented as available profit.
+This yields a contractual **60% prize allocation / 40% gross operator allocation**. A later multi-tier launch must define how the 60% is divided among jackpot and lower tiers before ticket sales begin. The reserve must never be represented as available profit.
 
 Alternative fixed lower-tier prizes may be introduced only after simulations across ticket volumes and correlated popular-number selection show an acceptable 99.9th-percentile liability. Fixed payouts without a cap can create insolvency when many players select the same winning line.
 
-### 5.4 Jackpot seed and cap
+### 5.4 Jackpot seed, reset, and cap
 
-- A launch seed may be marketing-funded, explicitly recorded as subordinated capital, and never taken from current player liabilities.
+- The first paid draw stays locked until the prize vault fully covers a $10,000 advertised jackpot.
+- The $10,000 launch seed is operator-funded reserve capital, explicitly recorded and never taken from unrelated player liabilities.
 - Jackpot balance equals prior rollover plus the current jackpot allocation less paid jackpot prizes.
-- If a regulator requires a cap, overflow moves according to pre-published rules: boost lower tiers, fund a special draw, or enter a player-benefit reserve. It must not silently become operator revenue.
+- After a jackpot winner is paid, the next jackpot resets to $10,000 using a separate ring-fenced reserve. If the reserve cannot fully fund it, the next draw cannot open.
+- The jackpot is capped at $1 million. Further prize allocation moves according to pre-published rules: boost lower tiers, fund a special draw, or enter a player-benefit reserve. It must not silently become operator revenue.
 - Multiple jackpot winners split the jackpot equally, subject to jurisdictional rounding rules.
 
 ## 6. Unit economics and profitability
 
-Let `T` be ticket revenue. Prize liability is `0.90T`; gross protocol revenue is `0.10T`.
+Let `T` be ticket revenue. Prize liability is `0.60T`; gross operator revenue is `0.40T`.
 
-`Net operating profit = 0.10T + ancillary revenue − operating costs − gaming duties − payment losses − promotions`
+`Net operating profit = 0.40T + ancillary revenue − reserve contributions − operating costs − gaming duties − payment losses − promotions`
 
 Illustrative steady-state scenario, not a forecast:
 
 | Daily lines | Ticket sales | Prize liability | Gross protocol revenue |
 |---:|---:|---:|---:|
-| 100,000 | $100,000 | $90,000 | $10,000 |
-| 1,000,000 | $1,000,000 | $900,000 | $100,000 |
+| 100,000 | $100,000 | $60,000 | $40,000 |
+| 1,000,000 | $1,000,000 | $600,000 | $400,000 |
 
 Required pre-launch financial model:
 
@@ -135,7 +134,7 @@ Required pre-launch financial model:
 - minimum working capital and jackpot reserve;
 - token-related legal, exchange, market-making, disclosure, and accounting costs, if any.
 
-**Decision gate:** if fully loaded costs exceed the 10% take, choose among (a) a higher disclosed take, (b) sponsorship/white-label/B2B revenue, (c) lower acquisition cost, or (d) no launch. Do not reduce already accrued prize liabilities.
+**Decision gate:** the model must demonstrate a sustainable 10% net margin after all costs, taxes, duties, and reserve funding. If it does not, choose among (a) revising the disclosed allocation for future draws where lawful, (b) sponsorship/white-label/B2B revenue, (c) lower acquisition cost, or (d) no launch. Do not reduce already accrued prize liabilities.
 
 ## 7. Draw integrity and randomness
 
@@ -381,7 +380,7 @@ FATF/APG identifies growing AML/CFT risks in increasingly digital and cross-bord
 | Risk | Severity | Primary mitigation |
 |---|---|---|
 | Unlicensed cross-border lottery | Existential | Market allowlist, licence-first rollout, legal opinions, geofencing/KYC |
-| 10% take fails to cover costs | High | Full cost model, B2B/white-label revenue, staged geography, stop/go gate |
+| 40% gross allocation fails to produce 10% net margin | High | Full cost model, reserve model, B2B/white-label revenue, staged geography, stop/go gate |
 | Jackpot or fixed-tier insolvency | Existential | Pari-mutuel accounting, segregated vaults, reserve, exposure caps, proof of liabilities |
 | Randomness manipulation/stall | Existential | Precommitted multi-source protocol, deadlines, bonds, deterministic fallback/refund |
 | Smart-contract exploit | Existential | Minimal programs, invariants, two audits, timelock, bounty, capped rollout |
@@ -437,7 +436,7 @@ Produce these artifacts before implementation scope is locked:
 
 - “Mega 35/45” is assumed to mean a Mega-style **6/45** game; confirm if the intended selection count is different.
 - One “ticket” is assumed to mean one six-number line at 1 USDC.
-- The operator seeks a 10% take, not guaranteed investment returns or a promise to token holders.
+- The operator targets a 10% net operating margin from a 40% gross allocation, not guaranteed investment returns or a promise to token holders.
 - The Helius API key exists but has not been requested or stored; implementation should use a secrets manager.
 - Target legal entity, licensing jurisdiction, launch countries, jackpot seed, reserve capital, KYC vendor, on/off-ramp, oracle vendors, and token status remain undecided.
 
