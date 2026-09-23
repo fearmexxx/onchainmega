@@ -1,0 +1,26 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Helius and provider credentials
+*helius*secret*
+*api-key*
+
+# Dependencies and build output
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Local tooling and editor state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+
