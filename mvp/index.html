@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080a12">
+  <title>Onchain Mega — Verifiable Number Draw</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="nav shell">
+    <a class="brand" href="#" aria-label="Onchain Mega home"><span class="brand-mark">M</span><span>ONCHAIN MEGA</span></a>
+    <div class="nav-actions"><span class="network"><i></i> Devnet prototype</span><button class="wallet" type="button">Connect wallet</button></div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="eyebrow">DAILY 6 / 45 · PUBLICLY VERIFIABLE</div>
+      <h1>Pick six.<br><span>Verify everything.</span></h1>
+      <p class="lede">A transparent number-draw prototype with auditable pool accounting and deterministic results. No real-money wagering is enabled.</p>
+      <div class="jackpot-card">
+        <div><span class="label">Current demo jackpot</span><strong id="jackpot">$10,000</strong></div>
+        <div class="progress-wrap"><div class="progress-copy"><span>Launch threshold funded</span><span id="fundingPercent">100%</span></div><div class="track"><div id="fundingBar" class="fill"></div></div></div>
+        <div class="card-meta"><span>60% to player pool</span><span>$10,000 floor</span><span>$1M cap</span></div>
+      </div>
+    </section>
+
+    <section class="play-grid shell">
+      <article class="panel picker">
+        <div class="panel-head"><div><span class="step">01</span><h2>Choose your numbers</h2></div><button id="quickPick" class="text-button" type="button">Quick pick</button></div>
+        <p>Select 6 unique numbers from 1 to 45.</p>
+        <div id="numberGrid" class="number-grid" aria-label="Number picker"></div>
+        <div class="selection"><div id="selectedNumbers" class="selected-numbers"><span>—</span><span>—</span><span>—</span><span>—</span><span>—</span><span>—</span></div><button id="clear" class="clear" type="button">Clear</button></div>
+      </article>
+
+      <aside class="panel ticket-card">
+        <span class="step">02</span><h2>Your demo entry</h2>
+        <div class="receipt-row"><span>Entry</span><strong>1 line</strong></div>
+        <div class="receipt-row"><span>Demo credits</span><strong>$1.00</strong></div>
+        <div class="receipt-row"><span>Prize allocation</span><strong>60¢</strong></div>
+        <div class="divider"></div>
+        <div class="notice"><span>i</span><p>This build uses play credits on devnet. It does not accept or award money.</p></div>
+        <button id="review" class="primary" type="button" disabled>Review demo entry</button>
+        <small>Odds of matching 6: 1 in 8,145,060</small>
+      </aside>
+    </section>
+
+    <section class="trust shell">
+      <div><span class="index">A</span><h3>Pool onchain</h3><p>Ticket allocation and liabilities are independently auditable.</p></div>
+      <div><span class="index">B</span><h3>Draw inputs committed</h3><p>Entropy sources and fallback rules are fixed before cutoff.</p></div>
+      <div><span class="index">C</span><h3>Result reproducible</h3><p>Anyone can recompute the six winning numbers.</p></div>
+    </section>
+  </main>
+
+  <dialog id="dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">DEMO ENTRY READY</span><h2>Your numbers</h2><div id="dialogNumbers" class="dialog-numbers"></div><p>This is a non-monetary prototype. Wallet signing and devnet program submission are the next implementation milestone.</p><button class="primary">Close preview</button></form></dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
+
