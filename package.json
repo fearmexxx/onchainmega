@@ -1,0 +1,11 @@
+{
+  "name": "onchainmega-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node mvp/server.mjs",
+    "test": "node --test mvp/domain.test.mjs"
+  }
+}
+
